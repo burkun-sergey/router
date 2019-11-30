@@ -10,6 +10,10 @@
 ```php
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use BSer\Router\ControllerInterface;
+use BSer\Router\Router;
+use BSer\Router\Request;
+
 class ApiController implements ControllerInterface
 {
     public function connect(Router $router)
@@ -48,10 +52,12 @@ $router = new Router();
 $router->mount('/v1/', $controller);
 
 $router->view(function ($response, Request $request) {
+    header('Content-Type: application/json');
     return json_encode($response, JSON_UNESCAPED_UNICODE | JSON_PRESERVE_ZERO_FRACTION);
 });
 
 $router->error(function (\Exception $exception, Request $request, $code) {
+	header('Content-Type: application/json');
     return json_encode(["code" => $code, "text" => $exception->getMessage()]);
 });
 
