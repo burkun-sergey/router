@@ -26,12 +26,14 @@ class ApiController implements ControllerInterface
             return ['/test'];
         });
         
-            
+        // пример url запроса: /test2/sup/get/234?var=value
         $router->get('/test2/{supplier}/get/{id}', function (Request $request) {
-            var_dump($request->get('supplier'));
-            var_dump($request->get('id'));
-            var_dump($request->get('var'));
-            return ['/test2'];
+            return [
+                'path'          => '/test2',
+                'supplier'      => $request->get('supplier'),
+                'id'            => $request->get('id'),
+                'get param var' => $request->get('var'),
+            ];
         });
             
                 
@@ -57,7 +59,7 @@ $router->view(function ($response, Request $request) {
 });
 
 $router->error(function (\Exception $exception, Request $request, $code) {
-	header('Content-Type: application/json');
+    header('Content-Type: application/json');
     return json_encode(["code" => $code, "text" => $exception->getMessage()]);
 });
 

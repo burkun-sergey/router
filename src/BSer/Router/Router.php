@@ -208,7 +208,7 @@ class Router
         $urlParamsNames = $this->getUrlParamsNames($route);
         
         if ($urlParamsNames) {
-            $pattern = preg_replace(self::URL_OPTIONS_PATTERN, '(.*)', $route);
+            $pattern = preg_replace(self::URL_OPTIONS_PATTERN, '([^\/\s]*)', $route);
         }
         
         return $pattern;
